@@ -16,8 +16,7 @@ class SearchBlock extends Component<SearchBlockProps, SearchBlockState> {
     };
   }
 
-
-  handleSearchChange = (event: { target: { value: any; }; }) => {
+  handleSearchChange = (event: { target: { value: string } }) => {
     this.setState({ searchTerm: event.target.value });
   };
 
