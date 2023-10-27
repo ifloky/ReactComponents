@@ -1,5 +1,12 @@
+
+@font-face {
+  font-family: 'starwars';
+  src: url('../../fonts/STARWARS') format(ttf);
+  font-weight: normal;
+  font-style: normal;
+}
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'starwars', system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 

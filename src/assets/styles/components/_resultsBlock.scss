@@ -1,0 +1,34 @@
+.results-block {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: $content-width;
+  margin: 0 auto;
+
+  &__planet {
+    border: 1px $color-primary solid;
+    border-radius: 7px;
+    width: 96vw;
+    padding: 0px 16px;
+
+    &-name span{
+      color: $color-primary;
+    }
+
+    &-climate span{
+      color: $color-primary;
+    }
+
+    &-diameter span{
+      color: $color-primary;
+    }
+
+    &-rotation span{
+      color: $color-primary;
+    }
+
+    &-terrain span{
+      color: $color-primary;
+    }
+  }
+}

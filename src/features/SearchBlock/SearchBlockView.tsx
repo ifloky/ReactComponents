@@ -27,7 +27,7 @@ class SearchBlock extends Component<SearchBlockProps, SearchBlockState> {
   render() {
     const { searchTerm } = this.state;
     return (
-      <div>
+      <div className="search-block">
         <input
           type="text"
           value={searchTerm}

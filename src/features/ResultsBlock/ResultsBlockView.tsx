@@ -18,14 +18,24 @@ class ResultsBlock extends Component<ResultsBlockProps> {
     const { searchResults } = this.props;
 
     return (
-      <div>
-        {searchResults.map((result: Planet) => (
-          <div key={result.id}>
-            <h3>name: {result.name}</h3>
-            <p>climate: {result.climate}</p>
-            <p>diameter: {result.diameter}</p>
-            <p>rotation_period: {result.rotation_period}</p>
-            <p>terrain: {result.terrain}</p>
+      <div className="results-block">
+        {searchResults.map((result: Planet, index: number) => (
+          <div key={index} className="results-block__planet">
+            <h3 className="results-block__planet-name">
+              <span>name:</span> {result.name}
+            </h3>
+            <p className="results-block__planet-climate">
+              <span>climate:</span> {result.climate}
+            </p>
+            <p className="results-block__planet-diameter">
+              <span>diameter:</span> {result.diameter}
+            </p>
+            <p className="results-block__planet-rotation">
+              <span>rotation_period:</span> {result.rotation_period}
+            </p>
+            <p className="results-block__planet-terrain">
+              <span>terrain:</span> {result.terrain}
+            </p>
           </div>
         ))}
       </div>
