@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import SearchBlock from './features/SearchBlock/SearchBlockView';
 import ResultsBlock from './features/ResultsBlock/ResultsBlockView';
+import { getPlanet } from "./shared/API";
 
 interface SearchPageState {
   searchTerm: string;
-  searchResults: string[];
+  searchResults: [];
   error: string | null;
 }
-
-interface SearchBlockProps {
-  onSearch: (searchTerm: string) => void;
-}
-
 class SearchPage extends Component<{}, SearchPageState> {
   constructor(props: {}) {
     super(props);
@@ -22,26 +18,23 @@ class SearchPage extends Component<{}, SearchPageState> {
     };
   }
 
-  handleSearch = (searchTerm: string) => {
-
-  };
-
-  simulateError = () => {
-    this.setState({ error: 'Error' });
+  handleSearch = async (searchText: string) => {
+    try {
+      const searchResults = await getPlanet(searchText);
+      this.setState({ searchResults: searchResults.results, error: null });
+      console.log(this.state.searchResults)
+    } catch (error) {
+      this.setState({ searchResults: [], error: 'Error' });
+    }
   };
 
   render() {
-    const { searchTerm, searchResults, error } = this.state;
-
     return (
       <div>
         <SearchBlock onSearch={this.handleSearch} />
         <ResultsBlock
-          searchResults={searchResults}
-          error={error}
-          onRetry={this.handleSearch}
+          searchResults={this.state.searchResults}
         />
-        <button onClick={this.simulateError}>Call error</button>
       </div>
     );
   }
