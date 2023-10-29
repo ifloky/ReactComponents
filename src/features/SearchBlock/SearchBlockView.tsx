@@ -21,7 +21,7 @@ class SearchBlock extends Component<SearchBlockProps, SearchBlockState> {
   };
 
   handleSearch = () => {
-    this.props.onSearch(this.state.searchTerm);
+    this.props.onSearch(this.state.searchTerm.trim());
   };
 
   render() {

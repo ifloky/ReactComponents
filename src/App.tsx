@@ -28,6 +28,10 @@ class SearchPage extends Component<object, SearchPageState> {
     }
   }
 
+  callError = () => {
+    throw new Error('This is a test error');
+  };
+
   handleSearch = async (searchText: string) => {
     this.setState({ loading: true });
 
@@ -55,6 +59,7 @@ class SearchPage extends Component<object, SearchPageState> {
       <>
         <h1 className="main-text">What planet are you interested in?</h1>
         <SearchBlock onSearch={this.handleSearch} />
+        <button onClick={this.callError}>Error</button>
         {this.state.loading ? (
           <div className="loader">Loading...</div>
         ) : (
