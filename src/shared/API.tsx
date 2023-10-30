@@ -11,3 +11,13 @@ export async function getPlanet(searchText: string) {
     return [];
   }
 }
+
+export async function getAllPlanets() {
+  try {
+    const response = await axios.get('https://swapi.dev/api/planets');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import SearchBlock from './features/SearchBlock/SearchBlockView';
 import ResultsBlock from './features/ResultsBlock/ResultsBlockView';
-import { getPlanet } from './shared/API';
+import { getAllPlanets, getPlanet } from './shared/API';
+import ErrorButton from './features/ErrorButton/ErrorButtonView';
 
 interface SearchPageState {
   searchTerm: string;
@@ -21,10 +22,24 @@ class SearchPage extends Component<object, SearchPageState> {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const lastSearchRequest = localStorage.getItem('searchRequest');
     if (lastSearchRequest) {
       this.handleSearch(lastSearchRequest);
+    } else {
+      this.setState({
+        searchResults: [],
+        error: null,
+        searchTerm: '',
+        loading: true,
+      });
+      const searchResults = await getAllPlanets();
+      this.setState({
+        searchResults: searchResults.results,
+        error: null,
+        searchTerm: '',
+        loading: false,
+      });
     }
   }
 
@@ -59,7 +74,7 @@ class SearchPage extends Component<object, SearchPageState> {
       <>
         <h1 className="main-text">What planet are you interested in?</h1>
         <SearchBlock onSearch={this.handleSearch} />
-        <button onClick={this.callError}>Error</button>
+        <ErrorButton onClick={this.callError}>Error</ErrorButton>
         {this.state.loading ? (
           <div className="loader">Loading...</div>
         ) : (
