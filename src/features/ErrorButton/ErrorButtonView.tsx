@@ -26,7 +26,9 @@ class ErrorButton extends Component<
 
     return (
       <>
-        <button onClick={this.handleClick}>Throw Error</button>
+        <button className="error-btn" onClick={this.handleClick}>
+          Throw Error
+        </button>
       </>
     );
   }
