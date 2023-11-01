@@ -15,7 +15,7 @@ class SearchPage extends Component<object, SearchPageState> {
   constructor(props: object) {
     super(props);
     this.state = {
-      searchTerm: '',
+      searchTerm: localStorage.getItem('searchRequest') || '',
       searchResults: [],
       error: null,
       loading: false,
@@ -23,16 +23,15 @@ class SearchPage extends Component<object, SearchPageState> {
   }
 
   async componentDidMount() {
-    const lastSearchRequest = localStorage.getItem('searchRequest');
-    if (lastSearchRequest) {
-      this.handleSearch(lastSearchRequest);
-    } else {
+    if (this.state.searchTerm) {
+      this.handleSearch(this.state.searchTerm);
       this.setState({
         searchResults: [],
         error: null,
-        searchTerm: '',
+        searchTerm: this.state.searchTerm,
         loading: true,
       });
+    } else {
       const searchResults = await getAllPlanets();
       this.setState({
         searchResults: searchResults.results,
@@ -69,7 +68,10 @@ class SearchPage extends Component<object, SearchPageState> {
     return (
       <>
         <h1 className="main-text">What planet are you interested in?</h1>
-        <SearchBlock onSearch={this.handleSearch} />
+        <SearchBlock
+          onSearch={this.handleSearch}
+          searchTerm={this.state.searchTerm}
+        />
         <ErrorButton />
         {this.state.loading ? (
           <div className="loader">Loading...</div>

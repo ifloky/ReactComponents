@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 interface SearchBlockProps {
   onSearch: (searchTerm: string) => void;
+  searchTerm: string;
 }
 
 interface SearchBlockState {
@@ -12,7 +13,7 @@ class SearchBlock extends Component<SearchBlockProps, SearchBlockState> {
   constructor(props: SearchBlockProps) {
     super(props);
     this.state = {
-      searchTerm: '',
+      searchTerm: props.searchTerm,
     };
   }
 
@@ -26,6 +27,7 @@ class SearchBlock extends Component<SearchBlockProps, SearchBlockState> {
 
   render() {
     const { searchTerm } = this.state;
+    console.log(searchTerm);
     return (
       <div className="search-block">
         <input
