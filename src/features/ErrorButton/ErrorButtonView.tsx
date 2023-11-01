@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-
-interface ErrorButtonState {
-  throwError: boolean;
-}
+import { ErrorButtonState } from '../../types/interfaces';
 
 class ErrorButton extends Component<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
