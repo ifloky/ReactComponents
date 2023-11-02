@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchSearchPage, getAllPlanets } from '../../shared/API';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import SearchBlock from '../../features/SearchBlock/SearchBlockView';
 import ResultsBlock from '../../features/ResultsBlock/ResultsBlockView';
 import ErrorButton from '../../features/ErrorButton/ErrorButtonView';
@@ -11,17 +11,19 @@ const SearchPage = () => {
   );
   const countPerPage = 10;
   const [countResults, setCountResults] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const { page } = useParams();
+  const [currentPage, setCurrentPage] = useState(Number(page) | 1);
+  const navigate = useNavigate();
 
   const handleSearch = useCallback(
     async (searchText: string) => {
       setLoading(true);
       try {
         if (searchText === searchTerm) {
-          const searchResults = await fetchSearchPage(searchText, currentPage);
+          const searchResults = await fetchSearchPage(searchText, Number(page));
           console.log(searchResults);
           setCountResults(searchResults.count);
           setSearchResults(searchResults.results);
@@ -34,6 +36,7 @@ const SearchPage = () => {
           setSearchResults(searchResults.results);
           setSearchTerm(searchText);
           localStorage.setItem('searchRequest', searchText);
+          navigate(`/search/1`);
         }
       } catch (error) {
         setSearchResults([]);
@@ -41,7 +44,7 @@ const SearchPage = () => {
         setLoading(false);
       }
     },
-    [currentPage]
+    [currentPage, navigate]
   );
 
   useEffect(() => {
@@ -62,8 +65,9 @@ const SearchPage = () => {
         setLoading(false);
       }
     };
+
     fetchData();
-  }, [searchTerm, currentPage]);
+  }, [searchTerm, currentPage, handleSearch, navigate]);
 
   return (
     <>
