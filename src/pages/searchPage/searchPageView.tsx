@@ -1,15 +1,54 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { fetchSearchPage, getAllPlanets } from '../../shared/API';
+import { useParams } from 'react-router-dom';
 import SearchBlock from '../../features/SearchBlock/SearchBlockView';
 import ResultsBlock from '../../features/ResultsBlock/ResultsBlockView';
-import { getAllPlanets, getPlanet } from '../../shared/API';
 import ErrorButton from '../../features/ErrorButton/ErrorButtonView';
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState(
     localStorage.getItem('searchRequest') || ''
   );
+  const countPerPage = 10;
+  const [countResults, setCountResults] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { page } = useParams();
+
+  const handleSearch = useCallback(
+    async (searchText: string) => {
+      setLoading(true);
+      try {
+        if (searchText === searchTerm) {
+          const searchResults = await fetchSearchPage(searchText, currentPage);
+          console.log(searchResults);
+          setCountResults(searchResults.count);
+          setSearchResults(searchResults.results);
+          setSearchTerm(searchText);
+          localStorage.setItem('searchRequest', searchText);
+        } else {
+          const searchResults = await fetchSearchPage(searchText, 1);
+          console.log(searchResults);
+          setCountResults(searchResults.count);
+          setSearchResults(searchResults.results);
+          setSearchTerm(searchText);
+          localStorage.setItem('searchRequest', searchText);
+        }
+      } catch (error) {
+        setSearchResults([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [currentPage]
+  );
+
+  useEffect(() => {
+    if (page) {
+      setCurrentPage(parseInt(page, 10));
+    }
+  }, [page]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,24 +62,8 @@ const SearchPage = () => {
         setLoading(false);
       }
     };
-
     fetchData();
-  }, [searchTerm]);
-
-  const handleSearch = async (searchText: string) => {
-    setLoading(true);
-
-    try {
-      const searchResults = await getPlanet(searchText);
-      setSearchResults(searchResults.results);
-      setSearchTerm(searchText);
-      localStorage.setItem('searchRequest', searchText);
-    } catch (error) {
-      setSearchResults([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [searchTerm, currentPage]);
 
   return (
     <>
@@ -50,7 +73,14 @@ const SearchPage = () => {
       {loading ? (
         <div className="loader">Loading...</div>
       ) : (
-        <ResultsBlock searchResults={searchResults} />
+        <ResultsBlock
+          searchResults={searchResults}
+          itemsPerPage={10}
+          countResults={countResults}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          countPerPage={countPerPage}
+        />
       )}
     </>
   );

@@ -1,15 +1,19 @@
 export interface Planet {
-  id: number;
-  name: string;
-  climate: string;
-  diameter: string;
-  rotation_period: string;
-  terrain: string;
+  id?: number;
+  name?: string;
+  climate?: string;
+  diameter?: string;
+  rotation_period?: string;
+  terrain?: string;
 }
 
 export interface ResultsBlockProps {
   searchResults: Planet[];
   itemsPerPage: number;
+  countResults: number;
+  currentPage: number;
+  countPerPage: number;
+  setCurrentPage: (page: number) => void;
 }
 
 export interface ErrorButtonState {
@@ -35,5 +39,7 @@ export interface Details {
 
 export interface PaginationProps {
   currentPage: number;
-  totalPages: number;
+  countPerPage: number;
+  countResults: number;
+  setCurrentPage: (page: number) => void;
 }

@@ -6,15 +6,20 @@ import { Details } from '../../types/interfaces';
 const DetailsPage = () => {
   const { id } = useParams();
 
-  const [details, setDetails] = useState<Details>();
+  const [details, setDetails] = useState<Details | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const result = await fetchResultsId(id);
-      setDetails(result);
-      setLoading(false);
+      try {
+        const result = await fetchResultsId(id);
+        setDetails(result);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching details:', error);
+        setLoading(false);
+      }
     };
 
     fetchData();
