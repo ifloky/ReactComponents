@@ -11,7 +11,7 @@ const Pagination: React.FC<PaginationProps> = ({
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div>
+    <div className="pagination">
       {pages.map((page) => (
         <Link
           key={page}

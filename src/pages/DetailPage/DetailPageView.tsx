@@ -13,7 +13,7 @@ const DetailsPage: React.FC<DetailsPageProps> = (props) => {
     props._updateSelectedPlanet();
   };
   return (
-    <div>
+    <div className="details-container">
       <div>
         <h2>Details</h2>
         {props.selectedPlanet ? (

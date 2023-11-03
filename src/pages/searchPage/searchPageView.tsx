@@ -30,7 +30,6 @@ const SearchPage = () => {
           localStorage.setItem('searchRequest', searchText);
         } else {
           const searchResults = await fetchSearchPage(searchText, 1);
-          console.log(searchResults);
           setCountResults(searchResults.count);
           setSearchResults(searchResults.results);
           setSearchTerm(searchText);

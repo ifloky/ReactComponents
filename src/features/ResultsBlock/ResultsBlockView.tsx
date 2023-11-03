@@ -13,7 +13,9 @@ const ResultsBlock: React.FC<ResultsBlockProps> = ({
 }) => {
   const [selectedPlanet, setSelectedPlanet] = useState<Planet | null>(null);
   const handleBackClick = () => {
-    setSelectedPlanet(null);
+    if (selectedPlanet) {
+      setSelectedPlanet(null);
+    }
   };
 
   return (
@@ -55,11 +57,12 @@ const ResultsBlock: React.FC<ResultsBlockProps> = ({
           setCurrentPage={setCurrentPage}
         />
       </div>
-      <div className="right-side">
-        <div
-          className="details-container"
-          style={{ display: selectedPlanet ? 'flex' : 'none' }}
-        >
+      <div
+        className="right-side"
+        onClick={handleBackClick}
+        style={{ display: selectedPlanet ? 'flex' : 'none' }}
+      >
+        <div>
           <DetailsPage
             selectedPlanet={selectedPlanet}
             currentPage={currentPage}
