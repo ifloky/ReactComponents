@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Planet, ResultsBlockProps } from '../../types/interfaces';
 import Pagination from '../Pagination/Pagination';
 import DetailsPage from '../../pages/DetailPage/DetailPageView';
@@ -11,9 +11,11 @@ const ResultsBlock: React.FC<ResultsBlockProps> = ({
   countPerPage,
   setCurrentPage,
 }) => {
+  const navigate = useNavigate();
   const [selectedPlanet, setSelectedPlanet] = useState<Planet | null>(null);
   const handleBackClick = () => {
     if (selectedPlanet) {
+      navigate(`/search/${currentPage}`);
       setSelectedPlanet(null);
     }
   };
