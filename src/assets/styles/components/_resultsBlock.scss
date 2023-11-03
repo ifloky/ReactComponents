@@ -1,9 +1,14 @@
 .results-block {
   display: flex;
+}
+
+.left-side {
+  display: flex;
   gap: 10px;
   flex-wrap: wrap;
   max-width: $content-width;
   margin: 0 auto;
+  flex: 1;
 
   &__planet {
     border: 1px $color-primary solid;
@@ -30,5 +35,22 @@
     &-terrain span {
       color: $color-primary;
     }
+  }
+}
+
+.right-side{
+  display: flex;
+  position: fixed;
+  top: 150px;
+  right: 50px;
+
+  .details-container {
+    min-width: 60%;
+    text-align: center;
+    max-height: 600px;
+    padding: 10px 30px;
+    background-color: $color-additional;
+    color: $color-dark;
+    border-radius: 7px;
   }
 }

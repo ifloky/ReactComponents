@@ -15,7 +15,7 @@ const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const { page } = useParams();
-  const [currentPage, setCurrentPage] = useState(Number(page) | 1);
+  const [currentPage, setCurrentPage] = useState(Number(page) || 1);
   const navigate = useNavigate();
 
   const handleSearch = useCallback(
@@ -23,8 +23,7 @@ const SearchPage = () => {
       setLoading(true);
       try {
         if (searchText === searchTerm) {
-          const searchResults = await fetchSearchPage(searchText, Number(page));
-          console.log(searchResults);
+          const searchResults = await fetchSearchPage(searchText, currentPage);
           setCountResults(searchResults.count);
           setSearchResults(searchResults.results);
           setSearchTerm(searchText);
@@ -36,6 +35,7 @@ const SearchPage = () => {
           setSearchResults(searchResults.results);
           setSearchTerm(searchText);
           localStorage.setItem('searchRequest', searchText);
+          setCurrentPage(1);
           navigate(`/search/1`);
         }
       } catch (error) {
@@ -44,7 +44,7 @@ const SearchPage = () => {
         setLoading(false);
       }
     },
-    [currentPage, navigate]
+    [navigate, searchTerm, currentPage]
   );
 
   useEffect(() => {

@@ -1,47 +1,36 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { fetchResultsId } from '../../shared/API';
-import { Details } from '../../types/interfaces';
+import { Link } from 'react-router-dom';
+import { Planet } from '../../types/interfaces';
 
-const DetailsPage = () => {
-  const { id } = useParams();
+interface DetailsPageProps {
+  selectedPlanet: Planet | null;
+  currentPage: number;
+  _updateSelectedPlanet: () => void;
+}
 
-  const [details, setDetails] = useState<Details | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const result = await fetchResultsId(id);
-        setDetails(result);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching details:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
+const DetailsPage: React.FC<DetailsPageProps> = (props) => {
+  console.log(props);
+  const handleBackClick = () => {
+    props._updateSelectedPlanet();
+  };
   return (
     <div>
-      {loading ? (
-        <div className="loader">Loading...</div>
-      ) : details ? (
-        <div>
-          <h2>Details</h2>
-          <p>Name: {details.name}</p>
-          <p>Climate: {details.climate}</p>
-          <p>Diameter: {details.diameter}</p>
-          <p>Rotation Period: {details.rotation_period}</p>
-          <p>Terrain: {details.terrain}</p>
-          <Link to="/">Back to Results</Link>
-        </div>
-      ) : (
-        <div>Details not found</div>
-      )}
+      <div>
+        <h2>Details</h2>
+        {props.selectedPlanet ? (
+          <>
+            <p>Name: {props.selectedPlanet.name}</p>
+            <p>Climate: {props.selectedPlanet.climate}</p>
+            <p>Diameter: {props.selectedPlanet.diameter}</p>
+            <p>Rotation Period: {props.selectedPlanet.rotation_period}</p>
+            <p>Terrain: {props.selectedPlanet.terrain}</p>
+          </>
+        ) : (
+          <p>No details available</p>
+        )}
+        <Link to={`/search/${props.currentPage}`} onClick={handleBackClick}>
+          Back to Results
+        </Link>{' '}
+      </div>
     </div>
   );
 };
