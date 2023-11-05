@@ -1,9 +1,5 @@
 import { useState } from 'react';
-
-interface SearchBlockProps {
-  onSearch: (searchTerm: string) => void;
-  searchTerm: string;
-}
+import { SearchBlockProps } from '../../types/interfaces';
 
 const SearchBlock: React.FC<SearchBlockProps> = (props) => {
   const [searchTerm, setSearchTerm] = useState(props.searchTerm);

@@ -1,11 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Planet } from '../../types/interfaces';
-
-interface DetailsPageProps {
-  selectedPlanet: Planet | null;
-  currentPage: number;
-  _updateSelectedPlanet: () => void;
-}
+import { DetailsPageProps } from '../../types/interfaces';
 
 const DetailsPage: React.FC<DetailsPageProps> = (props) => {
   console.log(props);

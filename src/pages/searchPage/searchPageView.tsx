@@ -11,7 +11,6 @@ const SearchPage = () => {
   );
   const countPerPage = 10;
   const [countResults, setCountResults] = useState(10);
-
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const { page } = useParams();
