@@ -3,7 +3,6 @@ import { fetchSearchPage, getAllPlanets } from '../../shared/API';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import SearchBlock from '../../features/SearchBlock/SearchBlockView';
 import ResultsBlock from '../../features/ResultsBlock/ResultsBlockView';
-import ErrorButton from '../../features/ErrorButton/ErrorButtonView';
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState(
@@ -72,7 +71,6 @@ const SearchPage = () => {
     <>
       <h1 className="main-text">What planet are you interested in?</h1>
       <SearchBlock onSearch={handleSearch} searchTerm={searchTerm} />
-      <ErrorButton />
       {loading ? (
         <div className="loader">Loading...</div>
       ) : (

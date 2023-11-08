@@ -1,34 +1,25 @@
-import React, { Component } from 'react';
-import { ErrorButtonState } from '../../types/interfaces';
+import React, { useState } from 'react';
 
-class ErrorButton extends Component<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  ErrorButtonState
-> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      throwError: false,
-    };
-  }
+const ErrorButton: React.FC<
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+> = () => {
+  const [throwError, setThrowError] = useState(false);
 
-  handleClick = () => {
-    this.setState({ throwError: true });
+  const handleClick = () => {
+    setThrowError(true);
   };
 
-  render() {
-    if (this.state.throwError) {
-      throw new Error('This is a simulated error');
-    }
-
-    return (
-      <>
-        <button className="error-btn" onClick={this.handleClick}>
-          Throw Error
-        </button>
-      </>
-    );
+  if (throwError) {
+    throw new Error('This is a simulated error');
   }
-}
+
+  return (
+    <>
+      <button className="error-btn" onClick={handleClick}>
+        Throw Error
+      </button>
+    </>
+  );
+};
 
 export default ErrorButton;
