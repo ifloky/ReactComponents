@@ -40,3 +40,14 @@ export interface PaginationProps {
   countResults: number;
   setCurrentPage: (page: number) => void;
 }
+
+export interface DetailsPageProps {
+  selectedPlanet: Planet | null;
+  currentPage: number;
+  _updateSelectedPlanet: () => void;
+}
+
+export interface SearchBlockProps {
+  onSearch: (searchTerm: string) => void;
+  searchTerm: string;
+}
