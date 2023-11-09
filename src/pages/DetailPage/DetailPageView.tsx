@@ -1,36 +1,52 @@
-import { Link } from 'react-router-dom';
+import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import { Planet } from '../../types/interfaces';
+import { fetchResultsId } from '../../shared/API';
+import { useEffect, useState } from 'react';
 
-interface DetailsPageProps {
-  selectedPlanet: Planet | null;
-  currentPage: number;
-  _updateSelectedPlanet: () => void;
-}
+const DetailsPage: React.FC = () => {
+  const { id } = useParams();
+  const [searchResults, setSearchResults] = useState<Planet | null>(null);
+  const navigate = useNavigate();
 
-const DetailsPage: React.FC<DetailsPageProps> = (props) => {
-  console.log(props);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (id) {
+          const result = await fetchResultsId(id.toString());
+          setSearchResults(result);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
   const handleBackClick = () => {
-    props._updateSelectedPlanet();
+    navigate(-1);
   };
+
   return (
     <div className="details-container">
       <div>
         <h2>Details</h2>
-        {props.selectedPlanet ? (
+        {searchResults ? (
           <>
-            <p>Name: {props.selectedPlanet.name}</p>
-            <p>Climate: {props.selectedPlanet.climate}</p>
-            <p>Diameter: {props.selectedPlanet.diameter}</p>
-            <p>Rotation Period: {props.selectedPlanet.rotation_period}</p>
-            <p>Terrain: {props.selectedPlanet.terrain}</p>
+            <p>Name: {searchResults.name}</p>
+            <p>Climate: {searchResults.climate}</p>
+            <p>Diameter: {searchResults.diameter}</p>
+            <p>Rotation Period: {searchResults.rotation_period}</p>
+            <p>Terrain: {searchResults.terrain}</p>
           </>
         ) : (
-          <p>No details available</p>
+          <p className="loader-wrapper">
+            <span className="loader"></span>
+          </p>
         )}
-        <Link to={`/search/${props.currentPage}`} onClick={handleBackClick}>
-          Back to Results
-        </Link>{' '}
+        <button onClick={handleBackClick}>Back to Results</button>
       </div>
+      <Outlet />
     </div>
   );
 };

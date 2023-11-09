@@ -5,15 +5,12 @@ export interface Planet {
   diameter?: string;
   rotation_period?: string;
   terrain?: string;
+  url?: string;
 }
 
 export interface ResultsBlockProps {
   searchResults: Planet[];
-  itemsPerPage: number;
-  countResults: number;
   currentPage: number;
-  countPerPage: number;
-  setCurrentPage: (page: number) => void;
 }
 
 export interface ErrorButtonState {

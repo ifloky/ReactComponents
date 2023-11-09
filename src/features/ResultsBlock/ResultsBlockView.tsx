@@ -1,31 +1,29 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Planet, ResultsBlockProps } from '../../types/interfaces';
-import Pagination from '../Pagination/Pagination';
 import DetailsPage from '../../pages/DetailPage/DetailPageView';
 
 const ResultsBlock: React.FC<ResultsBlockProps> = ({
   searchResults,
-  countResults,
   currentPage,
-  countPerPage,
-  setCurrentPage,
 }) => {
   const navigate = useNavigate();
-  const [selectedPlanet, setSelectedPlanet] = useState<Planet | null>(null);
+  const [selectedPlanet, setSelectedPlanet] = useState(false);
   const handleBackClick = () => {
     if (selectedPlanet) {
       navigate(`/search/${currentPage}`);
-      setSelectedPlanet(null);
+      setSelectedPlanet(false);
     }
   };
+
+  console.log(searchResults);
 
   return (
     <div className="results-block">
       <div className="left-side">
         {searchResults.length > 0 ? (
           searchResults.map((result: Planet, index: number) => (
-            <div key={index} className="left-side__planet">
+            <div key={index + 1} className="left-side__planet">
               <h3 className="left-side__planet-name">
                 <span>name:</span> {result.name}
               </h3>
@@ -42,22 +40,17 @@ const ResultsBlock: React.FC<ResultsBlockProps> = ({
                 <span>terrain:</span> {result.terrain}
               </p>
               <Link
-                to={`/search/${currentPage}/details/${index}`}
-                onClick={() => setSelectedPlanet(result)}
+                to={`/search/${currentPage}
+/details/${result.url ? result.url.slice(-2) : ''}`}
+                onClick={() => setSelectedPlanet(true)}
               >
                 Details
-              </Link>{' '}
+              </Link>
             </div>
           ))
         ) : (
           <h2> No results </h2>
         )}
-        <Pagination
-          countResults={countResults}
-          countPerPage={countPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
       </div>
       <div
         className="right-side"
@@ -65,11 +58,7 @@ const ResultsBlock: React.FC<ResultsBlockProps> = ({
         style={{ display: selectedPlanet ? 'flex' : 'none' }}
       >
         <div>
-          <DetailsPage
-            selectedPlanet={selectedPlanet}
-            currentPage={currentPage}
-            _updateSelectedPlanet={handleBackClick}
-          />
+          <DetailsPage />
         </div>
       </div>
     </div>

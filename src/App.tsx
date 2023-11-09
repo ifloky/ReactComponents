@@ -1,41 +1,20 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import SearchPage from './pages/searchPage/searchPageView';
 import DetailsPage from './pages/DetailPage/DetailPageView';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <SearchPage />,
-    errorElement: (
-      <div>
-        {' '}
-        PAGE NOT FOUND, KARL <br />
-        <span>404 KARL</span>
-      </div>
-    ),
-  },
-  {
-    path: '/search/:page',
-    element: <SearchPage />,
-    children: [
-      {
-        path: '/search/:page/details/:id',
-        element: (
-          <DetailsPage
-            currentPage={1}
-            selectedPlanet={null}
-            _updateSelectedPlanet={() => {
-              return;
-            }}
-          />
-        ),
-      },
-    ],
-  },
-]);
+import MainPageView from './pages/MainPage/MainPageView';
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Routes>
+      <Route path="/" element={<MainPageView />}>
+        <Route index element={<SearchPage />} />
+        <Route path=":page" element={<SearchPage />} />
+        <Route path="search/:page/*" element={<SearchPage />}>
+          <Route path="details/:id" element={<DetailsPage />} />
+        </Route>
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;

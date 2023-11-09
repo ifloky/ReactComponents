@@ -3,24 +3,32 @@ import { Link } from 'react-router-dom';
 import { PaginationProps } from '../../types/interfaces';
 
 const Pagination: React.FC<PaginationProps> = ({
+  setCurrentPage,
+  currentPage,
   countResults,
   countPerPage,
-  setCurrentPage,
 }) => {
   const totalPages = Math.ceil(countResults / countPerPage);
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <div className="pagination">
-      {pages.map((page) => (
+      <>
         <Link
-          key={page}
-          to={`/search/${page}`}
-          onClick={() => setCurrentPage(page)}
+          to={currentPage > 1 ? `/${currentPage - 1}` : `/${currentPage}`}
+          onClick={() => setCurrentPage(currentPage)}
         >
-          {page}
+          Prev page
         </Link>
-      ))}
+        <p>{currentPage}</p>
+        <Link
+          to={
+            currentPage < totalPages ? `/${currentPage + 1}` : `/${currentPage}`
+          }
+          onClick={() => setCurrentPage(currentPage)}
+        >
+          Next page
+        </Link>
+      </>
     </div>
   );
 };
