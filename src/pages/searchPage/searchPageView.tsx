@@ -19,6 +19,7 @@ const SearchPage = () => {
   const { page } = useParams();
   const [currentPage, setCurrentPage] = useState(Number(page) || 1);
   const navigate = useNavigate();
+
   const [blockCodeCompleted, setBlockCodeCompleted] = useState(false);
 
   const handleSearch = useCallback(
