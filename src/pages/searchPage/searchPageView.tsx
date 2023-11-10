@@ -5,10 +5,12 @@ import SearchBlock from '../../features/SearchBlock/SearchBlockView';
 import ResultsBlock from '../../features/ResultsBlock/ResultsBlockView';
 import Pagination from '../../features/Pagination/Pagination';
 
+const getLastRequest = (): string => {
+  return localStorage.getItem('searchRequest') || '';
+};
+
 const SearchPage = () => {
-  const [searchTerm, setSearchTerm] = useState(
-    localStorage.getItem('searchRequest') || ''
-  );
+  const [searchTerm, setSearchTerm] = useState(getLastRequest);
   const initialSearchResults: object[] = [];
   const countPerPage = 10;
   const [countResults, setCountResults] = useState(0);
@@ -17,7 +19,6 @@ const SearchPage = () => {
   const { page } = useParams();
   const [currentPage, setCurrentPage] = useState(Number(page) || 1);
   const navigate = useNavigate();
-
   const [blockCodeCompleted, setBlockCodeCompleted] = useState(false);
 
   const handleSearch = useCallback(
@@ -71,7 +72,7 @@ const SearchPage = () => {
     };
 
     fetchData();
-  }, [searchTerm, currentPage, handleSearch, navigate]);
+  }, [searchTerm, handleSearch]);
 
   return (
     <>
