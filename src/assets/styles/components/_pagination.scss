@@ -1,0 +1,18 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  a, p {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: $color-primary;
+    text-decoration: none;
+    padding: 5px;
+    border: 1px $color-additional solid;
+    border-radius: 5px;
+    height: 20px;
+  }
+}

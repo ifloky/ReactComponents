@@ -1,0 +1,116 @@
+
+.loader {
+  margin: 0 auto;
+  width: 48px;
+  height: 48px;
+  border: 3px solid #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: calc(50% - 24px);
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #FF3D00;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, 50%);
+  border-radius: 50%;
+}
+    
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+
+
+.results-block {
+  display: flex;
+}
+
+.left-side {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: $content-width;
+  margin: 0 auto;
+  flex: 1;
+
+  &__planet {
+    border: 1px $color-primary solid;
+    border-radius: 7px;
+    width: 96vw;
+    padding: 0px 16px;
+
+    &-name span {
+      color: $color-primary;
+    }
+
+    &-climate span {
+      color: $color-primary;
+    }
+
+    &-diameter span {
+      color: $color-primary;
+    }
+
+    &-rotation span {
+      color: $color-primary;
+    }
+
+    &-terrain span {
+      color: $color-primary;
+    }
+  }
+}
+
+.right-side{
+  display: flex;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: rgba(0,0,0,0.6);
+  width: 100vw;
+  height: 100vh;
+
+  .details-container {
+    width: 300px;
+    position: fixed;
+    top: 150px;
+    right: 50px;
+    text-align: center;
+    max-height: 600px;
+    padding: 10px 30px;
+    background-color: $color-additional;
+    color: $color-dark;
+    border-radius: 7px;
+    
+    & .loader-wrapper {
+      position: relative;
+      height: 100px;
+    }
+
+    & button {
+      border: 1px $color-dark solid;
+      border-radius: 5px;
+      outline: none;
+      background-color: transparent;
+      cursor: pointer;
+      transition: .5s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
