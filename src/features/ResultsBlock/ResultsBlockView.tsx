@@ -16,8 +16,6 @@ const ResultsBlock: React.FC<ResultsBlockProps> = ({
     }
   };
 
-  console.log(searchResults);
-
   return (
     <div className="results-block">
       <div className="left-side">
