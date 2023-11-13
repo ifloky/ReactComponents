@@ -51,3 +51,12 @@ export interface SearchBlockProps {
   onSearch: (searchTerm: string) => void;
   searchTerm: string;
 }
+
+export interface defState {
+  cash: number;
+}
+
+export interface action {
+  type: string;
+  payload: number;
+}
